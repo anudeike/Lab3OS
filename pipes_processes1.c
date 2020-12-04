@@ -15,10 +15,11 @@ int main()
     int fd1[2];  // Used to store two ends of first pipe 
     int fd2[2];  // Used to store two ends of second pipe 
   
-    char fixed_str[] = "howard.edu"; 
+    char fixed_str[] = ".howard.edu"; 
     char input_str[100]; 
     pid_t p; 
-  
+
+    // catching the pipe
     if (pipe(fd1)==-1) 
     { 
         fprintf(stderr, "Pipe Failed" ); 
@@ -29,9 +30,13 @@ int main()
         fprintf(stderr, "Pipe Failed" ); 
         return 1; 
     } 
-  
+
+
+    // get an input string
     printf("Enter a string to concatenate:");
     scanf("%s", input_str); 
+
+    // create a second process
     p = fork(); 
   
     if (p < 0) 
@@ -76,9 +81,12 @@ int main()
             concat_str[k++] = fixed_str[i]; 
   
         concat_str[k] = '\0';   // string ends with '\0' 
-  
+
+
+        // put hte strings together and have them display
         printf("Concatenated string %s\n", concat_str);
         // Close both reading ends 
+        // close for read and wirte
         close(fd1[0]); 
         close(fd2[0]); 
 
